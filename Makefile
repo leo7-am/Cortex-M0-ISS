@@ -1,15 +1,26 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++17 -O2 -Wall -Wextra
 
-KIT = csce2303-m0-iss-student/csce2303-m0-iss-student-v1.1
+KIT   = csce2303-m0-iss-student/csce2303-m0-iss-student-v1.1
+TESTS = python3 $(KIT)/public-tests/run_tests.py --iss "./iss"
 
-iss: iss.cpp decoder.cpp decoder.hpp
-	$(CXX) $(CXXFLAGS) -o iss iss.cpp decoder.cpp
+SRCS = $(wildcard *.cpp)
+HDRS = $(wildcard *.hpp)
+
+iss: $(SRCS) $(HDRS)
+	$(CXX) $(CXXFLAGS) -o iss $(SRCS)
 
 test-cp1: iss
-	python3 $(KIT)/public-tests/run_tests.py --iss "./iss" cp1
+	$(TESTS) cp1
+
+test-cp2: iss
+	$(TESTS) cp2
+
+# our own test programs in tests/
+test-ours: iss
+	$(TESTS) $(abspath tests)
 
 clean:
-	rm -f iss iss.exe
+	rm -f iss iss.exe *.o
 
-.PHONY: test-cp1 clean
+.PHONY: test-cp1 test-cp2 test-ours clean
