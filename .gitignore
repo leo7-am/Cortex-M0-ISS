@@ -1,0 +1,6 @@
+iss
+iss.exe
+iss.pdb
+*.o
+__MACOSX/
+.DS_Store
