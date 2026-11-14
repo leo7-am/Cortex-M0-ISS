@@ -8,6 +8,11 @@
 - Added to `iss.cpp`: finding the code section and reading the command line.
 - Wrote the Thumb program `programs/divide.s` (HW3 problem 3: division) and its dump.
 
+### Member C: Farah Habib
+- Wrote the Thumb program `programs/fib.s` (HW3 problem 5(a): recursive Fibonacci) and its
+  dump. It keeps the RARS version's prompts and output, and `fib` is recursive with a
+  12-byte stack frame (`push {r4, r5, lr}` / `pop {r4, r5, pc}`).
+
 ## CP2
 
 ### Member C: Farah Habib
