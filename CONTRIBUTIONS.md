@@ -15,6 +15,13 @@
 
 ## CP2
 
+### Member A: Marwan Aboelnour
+- Wrote the load and store instructions in `execute.cpp`: `LDR`, `STR`, `LDRB`, `STRB`,
+  `LDRH`, `STRH`, `LDRSB`, `LDRSH`, in all their forms (`[rn, #imm]`, `[rn, rm]`,
+  `[sp, #imm]` and `[pc, #imm]`).
+- Wrote `LDM`, `STM`, `PUSH` and `POP`. `POP {pc}` returns from a function and checks bit 0.
+- Wrote the test program `tests/memory_ops`, which checks all of these against refiss.
+
 ### Member C: Farah Habib
 - Split the simulator into files: `machine.hpp/.cpp` (my part), `execute.cpp` (where
   Members A and B add instructions by switching on `decode().op`), and `iss.cpp` (`main()`).
