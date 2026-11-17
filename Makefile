@@ -1,11 +1,10 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++17 -O2 -Wall -Wextra
 
-KIT   = csce2303-m0-iss-student/csce2303-m0-iss-student-v1.1
-TESTS = python3 $(KIT)/public-tests/run_tests.py --iss "./iss"
+TESTS = python3 public-tests/run_tests.py --iss "./iss"
 
-SRCS = $(wildcard *.cpp)
-HDRS = $(wildcard *.hpp)
+SRCS = $(wildcard src/*.cpp)
+HDRS = $(wildcard src/*.hpp)
 
 iss: $(SRCS) $(HDRS)
 	$(CXX) $(CXXFLAGS) -o iss $(SRCS)
