@@ -6,6 +6,7 @@
 // For now only the course skeleton's three instructions are here: MOVS #imm8, B and SVC.
 #include "machine.hpp"
 #include "decoder.hpp"
+#include "alu.hpp"
 
 static void set_nz(uint32_t x) { N = x >> 31; Z = (x == 0); }
 
@@ -128,17 +129,9 @@ void execute()
         break;
     }
 
-    // TODO (Member B): arithmetic, logic, shifts, flags, branches
-    //   MOVS_REG, MOV, MVNS,
-    //   ADDS_REG, ADDS_IMM3, ADDS_IMM8, ADD_HI, ADD_RD_SP, ADD_SP, SUB_SP, ADR,
-    //   ADCS, SUBS_REG, SUBS_IMM3, SUBS_IMM8, SBCS, NEGS, MULS,
-    //   ANDS, ORRS, EORS, BICS, TST, CMP_IMM, CMP, CMN,
-    //   LSLS_IMM, LSRS_IMM, ASRS_IMM, LSLS_REG, LSRS_REG, ASRS_REG, RORS,
-    //   SXTB, SXTH, UXTB, UXTH, REV, NOP,
-    //   B_COND (taken_branch() only when taken), BL (taken_branch() + bl_extra()), BX, BLX
-
-    default:                                     // UNDEF, and anything not written yet
-        fault("UNDEFINED");
+    default:                                     // the rest is Member B's, in alu.cpp
+        if (!execute_alu(in, pc, next))
+            fault("UNDEFINED");
     }
     r[15] = next;
 }
