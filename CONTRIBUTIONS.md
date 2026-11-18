@@ -54,13 +54,12 @@
   - faults as a C++ exception, so a faulting instruction doesn't retire
   - reset (sp, pc and INVSTATE from the vector table, lr = 0xFFFFFFFF)
   - fetch loop with the `--max-instr` LIMIT
-  - all SVC services (EXIT, PUTCHAR, PUTS, PUTINT, PUTHEX, GETCHAR, GETINT, READ, WRITE,
-    INSTRET, CYCLES, RAND, DUMP_REGS, DUMP_MEM, TRACE_ON, TRACE_OFF)
+  - SVC services: EXIT and the console services (PUTCHAR, PUTS, PUTINT, PUTHEX, GETCHAR,
+    GETINT), plus CYCLES, RAND, DUMP_REGS, DUMP_MEM, TRACE_ON and TRACE_OFF
   - the `--trace` file and the cycle counter (including `--cpu m0plus`)
 - Made Marwan's dump loader stricter: a bad line exits 253, and `.text` can span several
   ranges.
 - Command line: `--cpu` must be `m0` or `m0plus`, and numbers are checked.
 - Makefile: builds every `.cpp` file, adds `test-cp2` and `test-ours`. Added `.gitignore`
   and stopped tracking `iss.exe` and `iss.pdb`.
-- Test programs in `tests/`: `getint_rules`, `io_edge_cases`, `fault_bus_read_into_rom`,
-  `fault_unaligned_rom_store`.
+- Test programs in `tests/`: `getint_rules`, `fault_unaligned_rom_store`.

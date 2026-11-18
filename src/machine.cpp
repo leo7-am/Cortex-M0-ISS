@@ -298,7 +298,7 @@ int run(uint64_t max_instr)
 }
 
 // ============================================================ SVC services
-// stdin is read all at once on first use. GETCHAR, GETINT and READ share it.
+// stdin is read all at once on first use. GETCHAR and GETINT share it.
 static std::vector<uint8_t> in_data;
 static size_t in_pos = 0;
 static bool   in_loaded = false;
@@ -406,34 +406,6 @@ void svc(int n)
         break;
     case 0x15:                                               // GETINT
         r[0] = (uint32_t)get_int();
-        break;
-    case 0x22: {                                             // READ(fd, buf, count)
-        uint32_t fd = r[0], buf = r[1], count = r[2];
-        if (fd != 0)      { r[0] = (uint32_t)-9; break; }
-        if (count == 0)   { r[0] = 0; break; }
-        load_stdin();
-        size_t avail = in_data.size() - in_pos;
-        uint32_t got = count < avail ? count : (uint32_t)avail;
-        if (got > 0) {                                       // at EOF the buffer isn't touched
-            if (!range_ok(buf, got, true)) fault("BUS");
-            memcpy(mem_ptr(buf), &in_data[in_pos], got);     // not listed in the trace
-            in_pos += got;
-        }
-        r[0] = got;
-        break;
-    }
-    case 0x23: {                                             // WRITE(fd, buf, count)
-        uint32_t fd = r[0], buf = r[1], count = r[2];
-        if (fd != 1 && fd != 2) { r[0] = (uint32_t)-9; break; }
-        if (count == 0)         { r[0] = 0; break; }
-        if (!range_ok(buf, count, false)) fault("BUS");
-        if (fd == 2) fflush(stdout);
-        out(mem_ptr(buf), count, fd);
-        r[0] = count;
-        break;
-    }
-    case 0x30:                                               // INSTRET, counting this SVC
-        put64(instret + 1);
         break;
     case 0x31:                                               // CYCLES, this SVC = 1 cycle
         put64(cycles + 1);
